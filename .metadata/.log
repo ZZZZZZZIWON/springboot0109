@@ -85,3 +85,20 @@ org.eclipse.swt.SWTException: 정의되지 않음 또는 null 참조인 'scrollW
 
 !ENTRY org.eclipse.wildwebdeveloper.xml 2 0 2024-01-16 12:26:03.266
 !MESSAGE The given URI http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_1.xsd from org.eclipse.jst.standard.schemas could not be resolved for local access
+
+!ENTRY org.eclipse.egit.ui 4 0 2024-01-16 15:29:17.918
+!MESSAGE http://ZZZZZZZIWON@github.com/ZZZZZZZIWON/springboot0709.git: https://github.com/ZZZZZZZIWON/springboot0709.git/info/refs?service=git-upload-pack not found: Not Found
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: http://ZZZZZZZIWON@github.com/ZZZZZZZIWON/springboot0709.git: https://github.com/ZZZZZZZIWON/springboot0709.git/info/refs?service=git-upload-pack not found: Not Found
+	at org.eclipse.jgit.api.LsRemoteCommand.execute(LsRemoteCommand.java:192)
+	at org.eclipse.jgit.api.LsRemoteCommand.call(LsRemoteCommand.java:131)
+	at org.eclipse.egit.core.op.ListRemoteOperation.run(ListRemoteOperation.java:116)
+	at org.eclipse.egit.ui.internal.components.AsynchronousListOperation.run(AsynchronousListOperation.java:76)
+	at org.eclipse.egit.ui.internal.dialogs.CancelableFuture$1.run(CancelableFuture.java:280)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.jgit.errors.NoRemoteRepositoryException: http://ZZZZZZZIWON@github.com/ZZZZZZZIWON/springboot0709.git: https://github.com/ZZZZZZZIWON/springboot0709.git/info/refs?service=git-upload-pack not found: Not Found
+	at org.eclipse.jgit.transport.TransportHttp.createNotFoundException(TransportHttp.java:611)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:679)
+	at org.eclipse.jgit.transport.TransportHttp.openFetch(TransportHttp.java:467)
+	at org.eclipse.jgit.api.LsRemoteCommand.execute(LsRemoteCommand.java:170)
+	... 5 more

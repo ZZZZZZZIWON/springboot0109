@@ -24,15 +24,14 @@ public class ApiController {
 	@Autowired
 	BookService service;
 	
-	@GetMapping("/list/{page}")
-	Map<String, Object> list(@PathVariable int page) {
-		Pager pager = new Pager();
-		pager.setPage(page);
-		
-		return list(pager);
-	}
+	/*
+	 * @GetMapping("/list/{page}") Map<String, Object> list(@PathVariable int page)
+	 * { Pager pager = new Pager(); pager.setPage(page);
+	 * 
+	 * return list(pager); }
+	 */
 	
-	@GetMapping
+	@PostMapping("/list")
 	Map<String, Object> list(@RequestBody(required = false) Pager pager) {
 		if(pager == null) {
 			pager = new Pager();

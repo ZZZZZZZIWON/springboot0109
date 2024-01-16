@@ -6,24 +6,72 @@
     })
 })*/
 window.addEventListener("load", () => {
+    const state = {};
+
     const addModal = new bootstrap.Modal('#addModal') 
     const updateModal = new bootstrap.Modal('#updateModal') 
 
-    document.querySelectorAll(".pagination .page-item").forEach(item => {
-        item.addEventListener("click", e=> {
-            getPage(e.target.dataset.page)
+    document.querySelectorAll("form").forEach(item => {
+        item.addEventListener("submit", e => {
+            e.preventDefault();
+            console.log(e);
+      
+      		const search = item.querySelector("select[name='search']").value;      
+      		const keyword = item.querySelector("input[name='keyword']").value;    
+      		
+      		console.log(`${search} -> ${keyword}`)
+
+            getPage(1, {search, keyword})
+    /*        const form = e.target;
+            for(let i = 0; i < form.length; i++) {
+				const param = form[i];
+				console.log(`${param.name}: ${param.value}`);
+			}*/
         })
     })
+
+    document.querySelector(".pagination").addEventListener("click", e => {
+        if(e.target.classList.contains("page-link")) {
+            const {search, keyword} = state;
+
+            getPage(e.target.dataset.page,{search, keyword});
+        }
+        
+    }, {
+        capture:true,
+    })
     
-    const getPage = page => {
-        fetch(`/api/list/${page}`, {
+    const getPage = (page, option) => {
+
+        const item = {
+            page, 
+        }
+
+        if(option && option.search && option.keyword) {
+            item.search = option.search;
+            item.keyword = option.keyword;
+        }
+
+        fetch(`/api/list`, {
+            method: 'POST',
+            body:JSON.stringify(item),
+            headers: {
+                "Content-Type" : "application/json"
+            }
         })
         .then(resp => resp.json())
         .then(result => {
             console.log(result)
 
             const {list, pager} = result;
-            
+
+            if(option && option.search && option.keyword) {
+                state.search = pager.search;
+                state.keyword = pager.keyword;
+            } else {
+                delete state.search;
+                delete state.keyword;
+            }
               /*let html = '';
                 list.forEach(item => {
                   	html += `<tr>
@@ -105,9 +153,9 @@ window.addEventListener("load", () => {
                     pageLink.textContent = item;
 					pageLink.classList.add("page-link")	
 					pageLink.dataset.page = item;
-					pageLink.addEventListener("click", e=> {
+					/* pageLink.addEventListener("click", e=> {
                         getPage(e.target.dataset.page)
-                    })
+                    }) */
                    
 					pageItem.append(pageLink)  
 			
