@@ -6,7 +6,10 @@
     })
 })*/
 window.addEventListener("load", () => {
-    const state = {};
+    const state = {
+        url:"/api",
+        url_list:"/api/list"
+    };
 
     const addModal = new bootstrap.Modal('#addModal') 
     const updateModal = new bootstrap.Modal('#updateModal') 
@@ -52,7 +55,7 @@ window.addEventListener("load", () => {
             item.keyword = option.keyword;
         }
 
-        fetch(`/api/list`, {
+        fetch(state.url_list, {
             method: 'POST',
             body:JSON.stringify(item),
             headers: {
@@ -103,18 +106,22 @@ window.addEventListener("load", () => {
                     
                     const bookid = document.createElement("td");
                     bookid.textContent = item.bookid;
+                    bookid.classList.add("bookid")
                     tr.append(bookid);
                     
                     const bookname = document.createElement("td");
                     bookname.textContent = item.bookname;
+                    bookid.classList.add("bookname")
                     tr.append(bookname);
                     
                     const publisher = document.createElement("td");
                     publisher.textContent = item.publisher;
+                    bookid.classList.add("publisher")
                     tr.append(publisher);
                     
                     const price = document.createElement("td");
                     price.textContent = item.price;
+                    bookid.classList.add("price")
                     tr.append(price);
                     
                     const management = document.createElement("td");
@@ -171,7 +178,7 @@ window.addEventListener("load", () => {
     const deleteHandler = e => {
         const bookid = e.target.closest('tr').dataset.bookid;
 
-        fetch("/api", {
+        fetch(state.url, {
             method: 'DELETE',
             body: JSON.stringify({bookid}),
             headers: {
@@ -180,6 +187,12 @@ window.addEventListener("load", () => {
         }).then(resp => resp.json())
         .then(result => {
             console.log(result);
+
+            document.querySelector(`tr[data-bookid='${bookid}']`).remove()
+
+            const list = document.querySelectorAll('tbody tr')
+            if(list.length == 1) 
+                list[0].classList.remove("hide");
         })
     }
 
@@ -195,6 +208,7 @@ window.addEventListener("load", () => {
 	   
 	   updateModal.show();
 	   }; 
+       
    document.querySelector("#updateModal .update").addEventListener("click", e => {
     const item = {
         bookid:document.querySelector("#updateModal input[name='bookid']").value,
@@ -202,7 +216,7 @@ window.addEventListener("load", () => {
         publisher:document.querySelector("#updateModal input[name='publisher']").value,
         price:document.querySelector("#updateModal input[name='price']").value
     }
-    fetch("/api", {
+    fetch(state.url, {
         method:'PUT',
         body:JSON.stringify(item),
         headers: {
@@ -211,6 +225,13 @@ window.addEventListener("load", () => {
     }).then(resp => resp.json())
     .then(result => {
         console.log(result)
+
+        const tr = document.querySelector(`tr[data-bookid='${item.bookid}']`)
+
+        for (const attr in item) {
+            /* attr에는 key값이 넘어옴 */
+            tr.querySelector(`.${attr}`).textContent = item[attr];
+        }
     });
     updateModal.hide();
    })
@@ -232,7 +253,7 @@ window.addEventListener("load", () => {
 
         console.log(item);
 
-        fetch("/api", {
+        fetch(state.url, {
             method:'POST',
             body:JSON.stringify(item),
             headers: {
