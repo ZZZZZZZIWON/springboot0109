@@ -1,0 +1,10 @@
+package kr.co.jwins.bookshop.dao;
+
+import java.awt.print.Book;
+import java.util.List;
+
+public interface BookDao {
+
+	List<Book> list();
+
+}

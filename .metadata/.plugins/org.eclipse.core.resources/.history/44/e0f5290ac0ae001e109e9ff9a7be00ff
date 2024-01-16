@@ -1,0 +1,23 @@
+package kr.co.jwins.bookshop.service;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.co.jwins.bookshop.dao.BookDao;
+import kr.co.jwins.bookshop.model.Book;
+
+@Service
+public class BookServiceImpl implements BookService {
+
+	@Autowired
+	BookDao dao;
+	
+	@Override
+	public List<Book> list() {
+		return dao.list();
+	}
+
+}

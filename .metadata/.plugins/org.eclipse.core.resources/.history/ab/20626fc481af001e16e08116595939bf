@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jwins.bookshop.dao.BookDao">
+	<sql id="search">
+		SELECT * FROM book
+		<where>
+			<if test="search == 1">
+				bookid= #{keyword}
+			</if>
+			<if test="search == 2">
+				bookname LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="search == 3">
+				publisher LIKE '%' || #{keyword} || '%'
+			</if>			
+		</where>
+	</sql>
+
+	<select id="list" >
+		SELECT * FROM 
+			(SELECT sub.*, ROWNUM rnum FROM
+				(<include refid="search"></include>) sub)
+		WHERE rnum BETWEEN ((#{page} - 1) * #{perPage} + 1) AND (#{page} * #{perPage})
+	</select>
+	
+	<select id="total">
+		SELECT COUNT(*)
+		FROM (<include refid="search"></include>) sub 
+	</select>
+	
+	<select id="item">
+		SELECT * FROM book
+		WHERE bookid = #{bookid}
+	</select>
+	
+	<insert id="add">
+		INSERT INTO book
+		VALUES (SEQ_BOOK.nextval, #{bookname}, #{publisher}, #{price})
+	</insert>
+	
+	<update id="update">
+		UPDATE book
+		SET bookname = #{bookname}
+			, publisher = #{publisher}
+			, price = #{price}
+		WHERE bookid = #{bookid}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM book
+		WHERE bookid = #{bookid}
+	</delete>
+	
+</mapper>

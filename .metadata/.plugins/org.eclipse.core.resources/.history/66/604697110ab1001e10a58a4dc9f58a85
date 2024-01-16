@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="/include.html :: head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/book/list.js"></script>
+    <title></title>
+    <style>
+	
+	</style>
+  </head>
+<body>
+	<div class="container">
+		<div th:replace="/include.html :: nav"></div>
+		<div>
+			<h3>도서 목록</h3>
+		</div>
+
+		<div>
+			<form action="">
+				<div class="row">
+					<div class="col-5"></div>
+					<div class="col-2">
+						<select name="search" id="" class="form-select form-select-sm">
+							<option value="0">선택</option>
+							<option value="1">도서번호</option>
+							<option value="2">도서명</option>
+							<option value="3">출판사</option>
+						</select>
+					</div>
+					<div class="col-4">
+						<input type="text" name="keyword" class="form-control form-control-sm">
+					</div>
+					<div class="col d-grid">
+						<button class="btn btn-sm btn-outline-secondary">검색</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<div>
+			<table border="1" class="table mt-3"> 
+				<thead>
+					<tr>
+						<th>도서번호</th>
+						<th>도서명</th>
+						<th>출판사</th>
+						<th>가격</th>
+						<th>관리</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${list.size() < 1}">
+						<td colspan="5">검색 된 도서가 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item"><a class="page-link" th:href="@{|?page=1&${pager.query}|}">처음</a></li>
+			    <li class="page-item"><a class="page-link" th:href="@{|?page=${pager.prev}&${pager.query}|}">이전</a></li>
+			    <li th:each="item : ${pager.list}" th:class="'page-item ' + ${item == pager.page ? 'active' : ''}" ><a class="page-link"  href="#" th:href="@{|?page=${item}&${pager.query}|}" th:text="${item}">1</a></li>
+			    <li class="page-item"><a class="page-link" href="#" th:href="@{|?page=${pager.next}&${pager.query}|}">다음</a></li>
+			    <li class="page-item"><a class="page-link" href="#" th:href="@{|?page=${pager.last}&${pager.query}|}">마지막</a></li>
+			  </ul>
+			</nav>
+		<div class="row">
+			<div class="col-8"></div>
+			<div class="col d-grid">
+				<a id="add" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addModal">등록</a>
+			</div>
+			<div class="col d-grid">
+				<a href=".." class="btn btn-sm btn-outline-dark">이전</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Modal -->
+	<div class="modal fade" id="addModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">도서 등록</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        	 <div class="form-group">
+                    <label for="bookname" class="form-label">도서명: </label>
+                    <div>
+                        <input type="text" id="bookname" name="bookname" class="form-control">
+                    </div>
+                </div>
+                <div>
+                    <label for="publisher">출판사: </label>
+                    <div>
+                        <input type="text" id="publisher" name="publisher" class="form-control">
+                    </div>
+                </div>
+                <div>
+                    <label for="price">가격: </label>
+                    <div>
+                        <input type="text" id="price" name="price" class="form-control">
+                    </div>
+                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-success">등록</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+</html>

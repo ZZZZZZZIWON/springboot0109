@@ -1,0 +1,13 @@
+package kr.co.jwins.bookshop.dao;
+
+
+
+import java.util.List;
+
+import kr.co.jwins.bookshop.model.Book;
+
+public interface BookDao {
+
+	List<Book> list();
+
+}

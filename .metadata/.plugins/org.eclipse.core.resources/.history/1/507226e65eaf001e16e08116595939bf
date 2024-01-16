@@ -1,0 +1,36 @@
+package kr.co.jwins.bookshop.pager;
+
+public class Pager {
+
+	private int page = 1;
+	private int perPage = 10;
+	private float total;
+	private int perGroup = 5;
+	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getPerPage() {
+		return perPage;
+	}
+	public void setPerPage(int perPage) {
+		this.perPage = perPage;
+	}
+	
+	public int getLast() {
+		return 1;
+	}
+	
+	public int getPrev() {
+		return 1;
+	}
+
+	public int getNext() {
+		return 1;
+	}
+	
+	
+}

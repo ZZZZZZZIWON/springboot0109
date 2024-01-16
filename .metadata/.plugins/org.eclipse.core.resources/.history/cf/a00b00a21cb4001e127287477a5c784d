@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="/include.html :: head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/book/list.js"></script>
+    <title></title>
+    <style>
+		.hide {
+			display: none;
+		}
+	</style>
+  </head>
+<body>
+	<div class="container">
+		<div th:replace="/include.html :: nav"></div>
+		<div>
+			<h3>도서 목록</h3>
+		</div>
+
+		<div>
+			<form action="">
+				<div class="row">
+					<div class="col-5"></div>
+					<div class="col-2">
+						<select name="search" id="" class="form-select form-select-sm">
+							<option value="0">선택</option>
+							<option value="1">도서번호</option>
+							<option value="2">도서명</option>
+							<option value="3">출판사</option>
+						</select>
+					</div>
+					<div class="col-4">
+						<input type="text" name="keyword" class="form-control form-control-sm">
+					</div>
+					<div class="col d-grid">
+						<button class="btn btn-sm btn-outline-secondary">검색</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<div>
+			<table border="1" class="table mt-3"> 
+				<thead>
+					<tr>
+						<th>도서번호</th>
+						<th>도서명</th>
+						<th>출판사</th>
+						<th>가격</th>
+						<th>관리</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="list-empty">
+						<td colspan="5">검색 된 도서가 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item"><a class="page-link first" th:href="@{|?page=1&${pager.query}|}">처음</a></li>
+			    <li class="page-item"><a class="page-link prev" th:href="@{|?page=${pager.prev}&${pager.query}|}">이전</a></li>
+			    <li class="page" th:each="item : ${pager.list}" th:class="'page-item ' + ${item == pager.page ? 'active' : ''}" ><a class="page-link"  href="#" th:href="@{|?page=${item}&${pager.query}|}" th:text="${item}">1</a></li>
+			    <li class="page-item"><a class="page-link next" href="#" th:href="@{|?page=${pager.next}&${pager.query}|}">다음</a></li>
+			    <li class="page-item"><a class="page-link last" href="#" th:href="@{|?page=${pager.last}&${pager.query}|}">마지막</a></li>
+			  </ul>
+			</nav>
+		<div class="row">
+			<div class="col-8"></div>
+			<div class="col d-grid">
+				<a id="add" class="btn btn-sm btn-outline-success" S>등록</a>
+			</div>
+			<div class="col d-grid">
+				<a href=".." class="btn btn-sm btn-outline-dark">이전</a>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- Modal -->
+	<div class="modal fade" id="addModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">도서 등록</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        	 <div class="row form-group mb-3">
+                    <label for="bookname" class="col-2">도서명: </label>
+                    <div class="col">
+                        <input type="text" id="bookname" name="bookname" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="publisher" class="col-2">출판사: </label>
+                    <div class="col">
+                        <input type="text" id="publisher" name="publisher" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="price" class="col-2">가격: </label>
+                    <div class="col">
+                        <input type="text" id="price" name="price" class="form-control">
+                    </div>
+                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success add">등록</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!--addModal 끝-->
+
+<!-- updateModal -->
+	<div class="modal fade" id="updateModal" tabindex="-1">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">도서 정보 변경</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        	 <div class="row form-group mb-3">
+                    <label for="bookid" class="col-2">도서번호: </label>
+                    <div class="col">
+                        <input type="text" id="bookid" name="bookid" class="form-control" readonly>
+                    </div>
+                </div>
+	        	 <div class="row form-group mb-3">
+                    <label for="bookname" class="col-2">도서명: </label>
+                    <div class="col">
+                        <input type="text" id="bookname" name="bookname" class="form-control" >
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="publisher" class="col-2">출판사: </label>
+                    <div class="col">
+                        <input type="text" id="publisher" name="publisher" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group mb-3">
+                    <label for="price" class="col-2">가격: </label>
+                    <div class="col">
+                        <input type="number" id="price" name="price" class="form-control">
+                    </div>
+                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success update">변경</button>
+	        <button type="button" class="btn btn-secondary remove" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!--addModal 끝-->
+	
+	
+</body>
+</html>

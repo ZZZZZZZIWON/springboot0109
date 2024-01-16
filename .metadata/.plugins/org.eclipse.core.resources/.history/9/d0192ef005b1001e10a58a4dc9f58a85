@@ -1,0 +1,61 @@
+/*window.addEventListener("load", () => {
+    fetch("/api")
+    .then(resp => resp.json())
+    .then(result => {
+        console.log(result);
+    })
+})*/
+window.addEventListener("load", () => {
+    fetch("/api")
+    .catch(reason => console.log(reason))
+    .then(resp => {
+        if(resp.ok) {
+            resp.json()
+            .catch(reason => console.log(reason))
+            .then(result => {
+                console.log(result);
+
+                result.forEach(item => {
+                    const tr = document.createElement("tr");
+                    
+                    const bookid = document.createAttribute("td");
+                    bookid.textContent = item.bookid;
+                    tr.append(bookid);
+                    
+                    const bookname = document.createAttribute("td");
+                    bookname.textContent = item.bookname;
+                    tr.append(bookname);
+                    
+                    const publisher = document.createAttribute("td");
+                    publisher.textContent = item.publisher;
+                    tr.append(publisher);
+                    
+                    const price = document.createAttribute("td");
+                    price.textContent = item.price;
+                    tr.append(price);
+                    
+                    const management = document.createAttribute("td");
+                    
+                    const remove = document.createElement("a")
+                    remove.textContent = '삭제'
+                    remove.classList.add('btn', 'btn-sm', 'btn-ouline-danger')
+                    management.append(remove)
+                    
+                    const update = document.createElement("a")
+                    update.textContent = '변경'
+                    update.classList.add('btn', 'btn-sm', 'btn-ouline-warning')
+                    management.append(update);
+
+                    tr.append(management);
+
+                    document.querySelector("tbody").append(tr);
+
+
+                });
+            })
+        } else {
+            console.log(resp)
+        }
+    })
+    
+})

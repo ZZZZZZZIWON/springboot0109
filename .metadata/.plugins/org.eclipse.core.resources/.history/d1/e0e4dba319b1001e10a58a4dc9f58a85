@@ -1,0 +1,115 @@
+/*window.addEventListener("load", () => {
+    fetch("/api")
+    .then(resp => resp.json())
+    .then(result => {
+        console.log(result);
+    })
+})*/
+window.addEventListener("load", () => {
+    const addModal = new bootstrap.Modal('#addModal') 
+    const updateModal = new bootstrap.Modal('#updateModal') 
+   const updateHandler = e => updateModal.show(); 
+   
+    
+    document.querySelector("#add").addEventListener("click", e => {
+        document.querySelector("#addModal input[name='bookname']").value = '';
+        document.querySelector("#addModal input[name='publisher']").value = '';
+        document.querySelector("#addModal input[name='price']").value = '';
+        addModal.show();
+
+    })
+
+    document.querySelector("#addModal .add").addEventListener("click", e => {
+        const item = {
+            bookname: document.querySelector("#addModal input[name='bookname']").value,
+            publisher: document.querySelector("#addModal input[name='publisher']").value,
+            price: document.querySelector("#addModal input[name='price']").value,
+        };
+
+        console.log(item);
+
+        fetch("/api", {
+            method:'POST',
+            body:JSON.stringify(item),
+            headers: {
+				"Content-Type" : "application/json"
+			}
+        }).then(resp => resp.json())
+        .then(result => console.log(result))
+
+        addModal.hide();
+
+    })
+
+
+    fetch("/api")
+    .catch(reason => console.log(reason))
+    .then(resp => {
+        if(resp.ok) {
+            resp.json()
+            .catch(reason => console.log(reason))
+            .then(result => {
+                console.log(result);
+                
+                /*let html = '';
+                result.forEach(item => {
+                  	html += `<tr>
+						<td>${item.bookid}</td>
+						<td>${item.bookname}</td>
+						<td>${item.publisher}</td>
+						<td>${item.price}</td>
+						<td>
+							<a href="delete/${item.bookid}"><button class="btn btn-sm btn-outline-danger">삭제</button></a>
+							<a href="update/${item.bookid}"><button class="btn btn-sm btn-outline-warning">수정</button></a>
+						</td>
+					</tr>`;
+
+                    document.querySelector("tbody").innerHTML = html;
+                });*/
+
+                result.forEach(item => {
+                    const tr = document.createElement("tr");
+                    
+                    const bookid = document.createElement("td");
+                    bookid.textContent = item.bookid;
+                    tr.append(bookid);
+                    
+                    const bookname = document.createElement("td");
+                    bookname.textContent = item.bookname;
+                    tr.append(bookname);
+                    
+                    const publisher = document.createElement("td");
+                    publisher.textContent = item.publisher;
+                    tr.append(publisher);
+                    
+                    const price = document.createElement("td");
+                    price.textContent = item.price;
+                    tr.append(price);
+                    
+                    const management = document.createElement("td");
+                    
+                    const remove = document.createElement("a")
+                    remove.textContent = '삭제'
+                    remove.classList.add('btn', 'btn-sm', 'btn-outline-danger')
+                    management.append(remove)
+                    
+                    const update = document.createElement("a")
+                    update.textContent = '변경'
+                    update.classList.add('btn', 'btn-sm', 'btn-outline-warning')
+                    update.addEventListener("click", updateHandler)
+                    management.append(update);
+
+                    tr.append(management);
+
+                    document.querySelector("tbody").append(tr);
+
+
+                });
+                
+            })
+        } else {
+            console.log(resp)
+        }
+    })
+    
+})

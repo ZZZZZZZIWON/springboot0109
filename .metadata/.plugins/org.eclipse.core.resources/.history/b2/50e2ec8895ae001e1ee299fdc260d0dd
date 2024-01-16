@@ -1,0 +1,5 @@
+package kr.co.jwins.hello.model;
+
+public class Book {
+
+}

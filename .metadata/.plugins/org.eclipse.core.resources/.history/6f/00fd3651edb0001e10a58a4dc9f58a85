@@ -1,0 +1,53 @@
+package kr.co.jwins.bookshop.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import kr.co.jwins.bookshop.model.Book;
+import kr.co.jwins.bookshop.pager.Pager;
+import kr.co.jwins.bookshop.service.BookService;
+
+@RestController
+@RequestMapping("/api")
+public class ApiController {
+
+	@Autowired
+	BookService service;
+	
+	@GetMapping
+	List<Book> list(@RequestBody(required = false) Pager pager) {
+		if(pager == null) {
+			pager = new Pager();
+		}
+		return service.list(pager);
+	}
+	
+	@PostMapping
+	Book add(@RequestBody Book item) {
+		service.add(item);
+		
+		return item;
+	}
+	
+	@PutMapping
+	Book update(@RequestBody Book item) {
+		service.update(item);
+		
+		return item;
+	}
+	
+	@DeleteMapping
+	Book delete(@RequestBody Book item) {
+		service.delete(item.getBookid());
+		
+		return item;
+	}
+}

@@ -1,0 +1,26 @@
+package kr.co.jwins.bookshop.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import kr.co.jwins.bookshop.model.Book;
+import kr.co.jwins.bookshop.pager.Pager;
+import kr.co.jwins.bookshop.service.BookService;
+
+@RestController
+@RequestMapping("/api")
+public class ApiController {
+
+	@Autowired
+	BookService service;
+	
+	@GetMapping
+	List<Book> list(Pager page) {
+		return service.list(book);
+	}
+	
+}

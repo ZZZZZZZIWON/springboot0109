@@ -1,0 +1,5 @@
+package kr.co.jwins.bookshop.pager;
+
+public class Pager {
+
+}

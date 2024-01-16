@@ -1,0 +1,9 @@
+package kr.co.jwins.bookshop.pager;
+
+public class Pager {
+
+	private int page = 1;
+	private perPage = 19;
+	
+	
+}

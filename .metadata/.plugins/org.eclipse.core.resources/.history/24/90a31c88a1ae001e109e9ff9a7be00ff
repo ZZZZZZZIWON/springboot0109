@@ -1,0 +1,10 @@
+server.port=9090
+
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=book
+spring.datasource.password=1234
+
+mybatis.mapper-locations=classpath:mybatis/*.xml
+mybatis.type-aliases-package=kr.ac.jwins.bookshop.model
+mybatis.configuration.map-underscore-to-camel-case=true

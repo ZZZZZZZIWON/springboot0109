@@ -1,0 +1,9 @@
+package kr.co.jwins.hello.model;
+
+public class Book {
+
+	private Long bookid;
+	private String bookname;
+	private String publisher;
+	private int price;
+}

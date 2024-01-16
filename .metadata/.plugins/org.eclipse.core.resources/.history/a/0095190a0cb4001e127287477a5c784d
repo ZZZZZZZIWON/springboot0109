@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h1>BookShop</h1>
+        </div>
+        <div>
+            <ul>
+                <li><a href="book/list">도서관리</a></li>
+                <li><a href="customer/list">고객관리</a></li>
+                <li><a href="orders/list">주문관리</a></li>
+            </ul>
+                <li><a href="book/list.html">도서관리(JS)</a></li>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+window.addEventListener("load", () => {
+    fetch("/api")
+    .then(resp => resp.json())
+    .then(result => {
+        console.log(result);
+    })
+})
+window.addEventListener("load", () => {
+    fetch("/api")
+    .catch(reason => console.log())
+    .then(resp => {
+        if(resp.ok) {
+            resp.json()
+            .then(result => {
+                console.log(result)
+            })
+        } else {
+            console.log(resp)
+        }
+    })
+    
+})

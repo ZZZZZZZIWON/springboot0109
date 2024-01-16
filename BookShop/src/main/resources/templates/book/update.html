@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h3>도서정보 변경</h3>
+        </div>
+        <div>
+            <form action="" method="post">
+                <div>
+                    <label for="bookid">도서번호: </label>
+                    <div>
+                        <input type="text" id="bookid" name="bookid" th:value="${item.bookid}" readonly>
+                    </div>
+                </div>
+                <div>
+                    <label for="bookname">도서명: </label>
+                    <div>
+                        <input type="text" id="bookname" name="bookname" th:value="${item.bookname}">
+                    </div>
+                </div>
+                <div>
+                    <label for="publisher">출판사: </label>
+                    <div>
+                        <input type="text" id="publisher" name="publisher" th:value="${item.publisher}">
+                    </div>
+                </div>
+                <div>
+                    <label for="price">가격: </label>
+                    <div>
+                        <input type="text" id="price" name="price" th:value="${item.price}">
+                    </div>
+                </div>
+                <div>
+                    <button>변경</button>
+                    <a href="../list">취소</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
